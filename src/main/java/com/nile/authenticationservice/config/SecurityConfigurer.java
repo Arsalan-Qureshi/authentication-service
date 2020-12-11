@@ -30,9 +30,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // Disable authentication for the authenticate URL, but enable for all other requests.
         http.csrf().disable().authorizeRequests().antMatchers("/authenticate")
                 .permitAll().anyRequest().authenticated().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // Add our custom filter.
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

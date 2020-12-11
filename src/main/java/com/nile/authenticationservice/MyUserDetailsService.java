@@ -21,9 +21,6 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Optional<Buyer> buyer = buyerRepository.findByUserName(userName);
 
-        System.out.println();
-        System.out.println(buyer.get().getName());
-
         buyer.orElseThrow(() -> new UsernameNotFoundException("Not found: " + userName));
 
         return buyer.map(MyUserDetails::new).get();
